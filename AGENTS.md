@@ -13,13 +13,14 @@ go test ./...                        # run tests (none exist yet)
 
 ## Project Status
 
-**Early scaffold.** Only `main.go` and `cmd/root.go` exist. The root command is registered but has no subcommands and no real logic. All text-processing commands still need to be implemented.
+**Early scaffold.** `main.go`, `cmd/root.go`, and `cmd/secret.go` exist. The `secret` subcommand is implemented. More text-processing commands can be added.
 
 ## Code Organization
 
 ```
 main.go          — entry point, calls cmd.Execute()
 cmd/root.go      — root cobra.Command definition
+cmd/secret.go    — `secret` subcommand for generating random strings
 ```
 
 - **Entry point**: `main.go` → `cmd.Execute()`
