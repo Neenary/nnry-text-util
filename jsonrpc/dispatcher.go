@@ -52,7 +52,7 @@ func (d *Dispatcher) Dispatch(ctx context.Context, raw string) (string, error) {
 		return s, nil
 	}
 
-	// If result implements Method()/Params() (e.g. flowapi.APIMethod),
+	// If result implements Method()/Params() (e.g. api.APIMethod),
 	// marshal as JSON-RPC request model: {"method":"...","parameters":[...]}
 	if rm, ok := result.(interface{ Method() string; Params() []any }); ok {
 		b, err := json.Marshal(map[string]any{

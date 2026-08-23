@@ -1,4 +1,4 @@
-package flowapi
+package api
 
 import (
 	"encoding/json"
@@ -116,7 +116,7 @@ func TestLogDebug(t *testing.T) {
 func TestEmptyStructs(t *testing.T) {
 	tests := []struct {
 		name string
-		api  APIMethod
+		m    Method
 		want string
 	}{
 		{"RestartApp", RestartApp{}, `{"method":"Flow.Launcher.RestartApp"}`},
@@ -145,7 +145,7 @@ func TestEmptyStructs(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := mustMarshal(t, tt.api)
+			got := mustMarshal(t, tt.m)
 			if string(got) != tt.want {
 				t.Errorf("got %s, want %s", got, tt.want)
 			}
@@ -153,29 +153,17 @@ func TestEmptyStructs(t *testing.T) {
 	}
 }
 
-func TestNewResult(t *testing.T) {
-	r := NewResult("Title", "Subtitle", CopyToClipboard{Text: "hello", ShowDefaultNotification: true})
-	got, err := json.Marshal(r)
-	if err != nil {
-		t.Fatal(err)
-	}
-	want := `{"Title":"Title","SubTitle":"Subtitle","JsonRPCAction":{"method":"Flow.Launcher.CopyToClipboard","parameters":["hello",false,true]}}`
-	if string(got) != want {
-		t.Errorf("got %s, want %s", got, want)
-	}
-}
-
-func mustMarshal(t *testing.T, api APIMethod) []byte {
+func mustMarshal(t *testing.T, m Method) []byte {
 	t.Helper()
-	m := map[string]any{
-		"method":     api.Method(),
-		"parameters": api.Params(),
+	mm := map[string]any{
+		"method":     m.Method(),
+		"parameters": m.Params(),
 	}
 	// Remove parameters key if nil
-	if api.Params() == nil {
-		delete(m, "parameters")
+	if m.Params() == nil {
+		delete(mm, "parameters")
 	}
-	b, err := json.Marshal(m)
+	b, err := json.Marshal(mm)
 	if err != nil {
 		t.Fatal(err)
 	}

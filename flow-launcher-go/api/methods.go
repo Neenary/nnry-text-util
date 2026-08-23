@@ -1,4 +1,4 @@
-package flowapi
+package api
 
 // ── Flow control ──────────────────────────────────────────────────────────────
 
@@ -244,7 +244,7 @@ func (h HttpGetStreamAsync) Params() []any  { return []any{h.URL} }
 
 // FuzzySearch performs a fuzzy search.
 type FuzzySearch struct {
-	Query          string
+	Query           string
 	StringToCompare string
 }
 
@@ -305,7 +305,7 @@ func (l LogError) Params() []any  { return []any{l.ClassName, l.Message, l.Metho
 
 // OpenDirectory opens a directory in the file explorer.
 type OpenDirectory struct {
-	DirectoryPath     string
+	DirectoryPath      string
 	FileNameOrFilePath string
 }
 
@@ -314,7 +314,7 @@ func (o OpenDirectory) Params() []any  { return []any{o.DirectoryPath, o.FileNam
 
 // OpenUrl opens a URL in the browser.
 type OpenUrl struct {
-	URL      string
+	URL       string
 	InPrivate bool // nil means use default
 }
 
@@ -323,7 +323,7 @@ func (o OpenUrl) Params() []any  { return []any{o.URL, o.InPrivate} }
 
 // OpenWebUrl opens a URL in the browser even if it's a local file.
 type OpenWebUrl struct {
-	URL      string
+	URL       string
 	InPrivate bool
 }
 
