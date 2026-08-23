@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/qk/nnry-text-util/pkg/flowapi"
-	"github.com/qk/nnry-text-util/pkg/jsonrpc"
+	"github.com/neenary/nnry-text-util/pkg/flowapi"
+	"github.com/neenary/nnry-text-util/pkg/jsonrpc"
 	"github.com/spf13/cobra"
 )
 

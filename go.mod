@@ -1,4 +1,4 @@
-module github.com/qk/nnry-text-util
+module github.com/neenary/nnry-text-util
 
 go 1.26.5
 

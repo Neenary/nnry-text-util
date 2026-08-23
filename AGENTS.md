@@ -31,7 +31,7 @@ cmd/secret.go    — `secret` subcommand for generating random strings
 
 - **Go 1.26.5** (on Windows)
 - **Cobra v1.10.2** — CLI framework
-- **Module**: `github.com/qk/nnry-text-util`
+- **Module**: `github.com/neenary/nnry-text-util`
 
 ## Conventions
 

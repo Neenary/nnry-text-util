@@ -1,6 +1,6 @@
 package main
 
-import "github.com/qk/nnry-text-util/cmd"
+import "github.com/neenary/nnry-text-util/cmd"
 
 func main() {
 	cmd.Execute()
