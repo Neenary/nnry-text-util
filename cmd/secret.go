@@ -118,8 +118,8 @@ By default, generates a 32-character secret using letters, digits, and symbols.`
 			return err
 		}
 
-		fmt.Print(result)
-		return nil
+		fmt.Println(result)
+			return nil
 	},
 }
 
