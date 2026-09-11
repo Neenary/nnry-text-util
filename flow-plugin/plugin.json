@@ -1,7 +1,7 @@
 {
   "$schema": "https://www.flowlauncher.com/schemas/plugin.schema.json",
   "ID": "d4f8e3a2-1b7c-4e9f-8d6a-5c3b2f1e0a9d",
-  "ActionKeyword": "nt",
+  "ActionKeyword": "ntu",
   "Name": "NNRY Text Util",
   "Description": "Text processing utilities: secrets, encode, decode, transform",
   "Author": "qk",

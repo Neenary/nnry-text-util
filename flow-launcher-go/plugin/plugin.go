@@ -136,8 +136,13 @@ func (p *Plugin) makeExecuteHandler(tool ToolDef) jsonrpc.HandlerFunc {
 		if err != nil {
 			return nil, jsonrpc.NewError(-1, err.Error())
 		}
-		// Return a string so dispatcher returns it as raw output
-		return result, nil
+		// Return a Flow.Launcher API request so the result is copied to clipboard.
+		// Flow Launcher's JsonRPCPlugin deserializes the response as a
+		// JsonRPCRequestModel and executes the next action.
+		return map[string]any{
+			"method":     "Flow.Launcher.CopyToClipboard",
+			"parameters": []any{result, true, true},
+		}, nil
 	}
 }
 

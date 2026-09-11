@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"strings"
+	"time"
 
 	"github.com/neenary/flow-launcher-go/plugin"
 )
@@ -15,6 +17,13 @@ func init() {
 		Description: "Generate a cryptographically secure random string",
 		Example:     "secret 64 --alpha --no-upper",
 		Handler:     handleToolSecret,
+	})
+	flowPlugin.Define(plugin.ToolDef{
+		Name:        "timestamp",
+		Aliases:     []string{"ts", "time", "now", "date"},
+		Description: "Generate an ISO timestamp string valid for Windows filenames",
+		Example:     "timestamp --utc --compact",
+		Handler:     handleToolTimestamp,
 	})
 	flowPlugin.Attach(rootCmd)
 }
@@ -75,4 +84,63 @@ func handleToolSecret(ctx context.Context, args []string) (string, error) {
 		return "", fmt.Errorf("failed to generate secret: %w", err)
 	}
 	return secret, nil
+}
+
+// handleToolTimestamp generates a Windows-safe timestamp string.
+func handleToolTimestamp(ctx context.Context, args []string) (string, error) {
+	utc := false
+	dateOnly := false
+	timeOnly := false
+	compact := false
+	separator := "-"
+
+	for i := 0; i < len(args); i++ {
+		arg := args[i]
+		switch {
+		case arg == "--utc":
+			utc = true
+		case arg == "--date" || arg == "-d":
+			dateOnly = true
+		case arg == "--time" || arg == "-t":
+			timeOnly = true
+		case arg == "--compact" || arg == "-c":
+			compact = true
+		case arg == "--separator" || arg == "-s":
+			if i+1 < len(args) {
+				i++
+				separator = args[i]
+			}
+		}
+	}
+
+	now := time.Now()
+	if utc {
+		now = now.UTC()
+	}
+
+	var result string
+	switch {
+	case compact:
+		if dateOnly {
+			result = now.Format("20060102")
+		} else if timeOnly {
+			result = now.Format("150405")
+		} else {
+			result = now.Format("20060102T150405")
+		}
+	case dateOnly:
+		result = now.Format("2006-01-02")
+	case timeOnly:
+		result = now.Format("15:04:05")
+	default:
+		result = now.Format("2006-01-02T15:04:05")
+	}
+
+	if !compact && !dateOnly && !timeOnly {
+		result = strings.ReplaceAll(result, ":", separator)
+	} else if timeOnly && !compact {
+		result = strings.ReplaceAll(result, ":", separator)
+	}
+
+	return result, nil
 }
